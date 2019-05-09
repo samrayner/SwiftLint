@@ -47,6 +47,9 @@ public struct FileTypesOrderRule: ConfigurationProviderRule, OptInRule {
             return lhs.offset < rhs.offset
         }
 
+        guard orderedFileTypeOffsets.map({ $0.fileType }).contains(.mainType) ||
+              !configuration.order.flatMap({ $0 }).contains(.mainType) else { return [] }
+
         var violations =  [StyleViolation]()
 
         var lastMatchingIndex = -1
